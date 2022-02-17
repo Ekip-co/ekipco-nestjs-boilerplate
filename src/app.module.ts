@@ -10,7 +10,6 @@ import { MessageModule } from '@modules/message/message.module';
 import { FirebaseModule } from '@modules/firebase/firebase.module';
 import { FirebaseAuthGuard } from '@guards/firebase-auth.guard';
 import { Locale } from '@constants';
-import { AuthModule } from '@modules/auth/auth.module';
 import { AllExceptionsFilter } from '@filters';
 
 @Module({
@@ -27,7 +26,6 @@ import { AllExceptionsFilter } from '@filters';
       languages: [Locale.en, Locale.de],
     }),
     FirebaseModule,
-    AuthModule,
   ],
   providers: [
     {
