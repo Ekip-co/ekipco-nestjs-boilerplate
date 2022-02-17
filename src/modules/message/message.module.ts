@@ -5,18 +5,18 @@ import { MESSAGE_SERVICE } from '@modules/message/message.decarator';
 
 @Module({})
 export class MessageModule {
-  static forRoot(options: MessageOptions): DynamicModule {
-    const messageProvider: FactoryProvider<MessageService> = {
-      provide: MESSAGE_SERVICE,
-      useFactory: () => {
-        return new MessageService(options);
-      },
-    };
+    static forRoot(options: MessageOptions): DynamicModule {
+        const messageProvider: FactoryProvider<MessageService> = {
+            provide: MESSAGE_SERVICE,
+            useFactory: () => {
+                return new MessageService(options);
+            },
+        };
 
-    return {
-      module: MessageModule,
-      providers: [messageProvider],
-      exports: [messageProvider],
-    };
-  }
+        return {
+            module: MessageModule,
+            providers: [messageProvider],
+            exports: [messageProvider],
+        };
+    }
 }

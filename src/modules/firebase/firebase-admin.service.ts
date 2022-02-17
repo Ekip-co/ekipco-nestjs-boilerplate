@@ -9,49 +9,49 @@ import { isDefined } from 'class-validator';
 
 @Injectable()
 export class FirebaseAdminService {
-  private readonly app: App;
-  private readonly auth: Auth;
-  private readonly firestore: Firestore;
-  private readonly database: Database;
+    private readonly app: App;
+    private readonly auth: Auth;
+    private readonly firestore: Firestore;
+    private readonly database: Database;
 
-  constructor(
-    @Inject(firebaseConfig.KEY)
-    private firebaseCfg: ConfigType<typeof firebaseConfig>,
-  ) {
-    if (this.isExistsConfig()) {
-      this.app = initializeApp({
-        credential: cert(firebaseCfg.credential),
-        databaseURL: firebaseCfg.databaseURL,
-      });
-    } else {
-      this.app = initializeApp();
+    constructor(
+        @Inject(firebaseConfig.KEY)
+        private firebaseCfg: ConfigType<typeof firebaseConfig>,
+    ) {
+        if (this.isExistsConfig()) {
+            this.app = initializeApp({
+                credential: cert(firebaseCfg.credential),
+                databaseURL: firebaseCfg.databaseURL,
+            });
+        } else {
+            this.app = initializeApp();
+        }
+
+        getFirestore(this.app).settings({
+            ignoreUndefinedProperties: true,
+        });
+
+        this.auth = getAuth(this.app);
+        this.firestore = getFirestore(this.app);
+        this.database = getDatabase(this.app);
     }
 
-    getFirestore(this.app).settings({
-      ignoreUndefinedProperties: true,
-    });
+    private isExistsConfig(): boolean {
+        return (
+            isDefined(this.firebaseCfg.credential) &&
+            isDefined(this.firebaseCfg.databaseURL)
+        );
+    }
 
-    this.auth = getAuth(this.app);
-    this.firestore = getFirestore(this.app);
-    this.database = getDatabase(this.app);
-  }
+    getAuth() {
+        return this.auth;
+    }
 
-  private isExistsConfig(): boolean {
-    return (
-      isDefined(this.firebaseCfg.credential) &&
-      isDefined(this.firebaseCfg.databaseURL)
-    );
-  }
+    getFirestore() {
+        return this.firestore;
+    }
 
-  getAuth() {
-    return this.auth;
-  }
-
-  getFirestore() {
-    return this.firestore;
-  }
-
-  getDatabase() {
-    return this.database;
-  }
+    getDatabase() {
+        return this.database;
+    }
 }

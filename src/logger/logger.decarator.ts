@@ -12,7 +12,7 @@ const loggerContexts = new Set<string>();
  * @name getLoggerToken
  */
 export function getLoggerToken(context: string): string {
-  return `${LoggerService.name}:${context}`;
+    return `${LoggerService.name}:${context}`;
 }
 
 /**
@@ -20,10 +20,10 @@ export function getLoggerToken(context: string): string {
  * @param context - prefer input your service name
  */
 export function InjectLogger(context = '') {
-  loggerContexts.add(context);
-  return Inject(getLoggerToken(context));
+    loggerContexts.add(context);
+    return Inject(getLoggerToken(context));
 }
 
 export function getLoggerContexts() {
-  return [...loggerContexts.values()];
+    return [...loggerContexts.values()];
 }

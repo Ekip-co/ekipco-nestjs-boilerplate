@@ -13,33 +13,33 @@ import { Locale } from '@constants';
 import { AllExceptionsFilter } from '@filters';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({
-      envFilePath: ['.env.development', '.env.production', '.env'],
-      isGlobal: true,
-      load: [firebaseConfig, gcloudConfig, generalConfig],
-    }),
-    LoggerModule.forRoot(),
-    MessageModule.forRoot({
-      path: __dirname + '/resources/locales/',
-      defaultLanguage: Locale.en,
-      languages: [Locale.en, Locale.de],
-    }),
-    FirebaseModule,
-  ],
-  providers: [
-    {
-      provide: APP_GUARD,
-      useClass: FirebaseAuthGuard,
-    },
-    {
-      provide: APP_PIPE,
-      useClass: ValidationPipe,
-    },
-    {
-      provide: APP_FILTER,
-      useClass: AllExceptionsFilter,
-    },
-  ],
+    imports: [
+        ConfigModule.forRoot({
+            envFilePath: ['.env.development', '.env.production', '.env'],
+            isGlobal: true,
+            load: [firebaseConfig, gcloudConfig, generalConfig],
+        }),
+        LoggerModule.forRoot(),
+        MessageModule.forRoot({
+            path: __dirname + '/resources/locales/',
+            defaultLanguage: Locale.en,
+            languages: [Locale.en, Locale.de],
+        }),
+        FirebaseModule,
+    ],
+    providers: [
+        {
+            provide: APP_GUARD,
+            useClass: FirebaseAuthGuard,
+        },
+        {
+            provide: APP_PIPE,
+            useClass: ValidationPipe,
+        },
+        {
+            provide: APP_FILTER,
+            useClass: AllExceptionsFilter,
+        },
+    ],
 })
 export class AppModule {}

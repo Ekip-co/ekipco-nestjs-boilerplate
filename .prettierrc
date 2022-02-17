@@ -1,4 +1,20 @@
 {
-  "singleQuote": true,
-  "trailingComma": "all"
+    "singleQuote": true,
+    "useTabs": false,
+    "eslintIntegration": true,
+    "trailingComma": "all",
+    "overrides": [
+        {
+            "files": ["*.js", "*.ts", "*.jsx", "*.tsx", "*.mjs", "*.cjs"],
+            "options": {
+                "tabWidth": 4
+            }
+        },
+        {
+            "files": ["*.json", "*.html", "*.yaml", "*.yml"],
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ]
 }
