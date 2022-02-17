@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2017",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
+    "resolveJsonModule": true,
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["*"],
+      "@exceptions": ["common/exceptions"],
+      "@filters": ["common/filters"],
+      "@guards/*": ["common/guards/*"],
+      "@interceptors": ["common/interceptors"],
+      "@middleware": ["common/middleware"],
+      "@pipes": ["common/pipes"],
+      "@config/*": ["config/*"],
+      "@constants": ["constants"],
+      "@utils/*": ["utils/*"],
+      "@logger": ["logger"],
+      "@modules/*": ["modules/*"],
+      "@locales/*": ["resources/locales/*"]
+    }
+  }
+}

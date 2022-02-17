@@ -1,0 +1,6 @@
+{
+  "NO_AUTHORIZATION_TOKEN": "Im Authorization-Header wurde kein Firebase-ID-Token als Bearer-Token übergeben",
+  "UNAUTHORIZED_ACCESS": "Unautorisierter Zugriff für Firebase",
+  "EMAIL_NOT_VERIFIED": "E-Mail ist nicht verifiziert!",
+  "NOT_FOUND": "Nicht Gefunden!"
+}

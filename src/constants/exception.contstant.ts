@@ -1,0 +1,14 @@
+export enum ForbiddenExceptionType {
+  FORBIDDEN = 'FORBIDDEN',
+  EMAIL_NOT_VERIFIED = 'EMAIL_NOT_VERIFIED',
+}
+
+export enum UnauthorizedExceptionType {
+  UNAUTHORIZED_ACCESS = 'UNAUTHORIZED_ACCESS',
+  NO_AUTHORIZATION_TOKEN = 'NO_AUTHORIZATION_TOKEN',
+  USER_NOT_REGISTERED = 'USER_NOT_REGISTERED',
+}
+
+export enum BadRequestExceptionType {
+  BAD_REQUEST = 'BAD_REQUEST',
+}
