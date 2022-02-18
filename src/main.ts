@@ -11,6 +11,7 @@ import { morganConfig } from '@config/morgan.config';
 import { corsOptions } from '@config/cors.config';
 import generalConfig from '@config/general.config';
 import { LoggerService, LoggingInterceptor, appendMetaToLogger } from '@logger';
+import { TransformInterceptor } from '@interceptors';
 import {
     httpRedirect,
     requestIdMiddleware,
@@ -67,6 +68,8 @@ async function bootstrap() {
     app.use(cookieParser());
 
     app.use(languageMiddleware);
+
+    app.useGlobalInterceptors(new TransformInterceptor());
 
     await app.listen(3000);
 }
