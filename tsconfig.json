@@ -23,6 +23,7 @@
       "@exceptions": ["common/exceptions"],
       "@filters": ["common/filters"],
       "@guards/*": ["common/guards/*"],
+      "@decorators": ["common/decorators"],
       "@interceptors": ["common/interceptors"],
       "@middleware": ["common/middleware"],
       "@pipes": ["common/pipes"],
@@ -31,6 +32,7 @@
       "@utils/*": ["utils/*"],
       "@logger": ["logger"],
       "@modules/*": ["modules/*"],
+      "@resources/*": ["resources/*"],
       "@locales/*": ["resources/locales/*"]
     }
   }
