@@ -6,18 +6,21 @@ import { ValidationPipe } from '@pipes';
 import generalConfig from '@config/general.config';
 import gcloudConfig from '@config/gcloud.config';
 import firebaseConfig from '@config/firebase.config';
+import zohoConfig from '@config/zoho.config';
 import { MessageModule } from '@modules/message/message.module';
 import { FirebaseModule } from '@modules/firebase/firebase.module';
 import { FirebaseAuthGuard } from '@guards/firebase-auth.guard';
 import { Locale } from '@constants';
 import { AllExceptionsFilter } from '@filters';
+import { TempModule } from '@modules/temp/temp.module';
+import { ZohoModule } from '@modules/zoho/zoho.module';
 
 @Module({
     imports: [
         ConfigModule.forRoot({
             envFilePath: ['.env.development', '.env.production', '.env'],
             isGlobal: true,
-            load: [firebaseConfig, gcloudConfig, generalConfig],
+            load: [firebaseConfig, gcloudConfig, generalConfig, zohoConfig],
         }),
         LoggerModule.forRoot(),
         MessageModule.forRoot({
@@ -26,6 +29,8 @@ import { AllExceptionsFilter } from '@filters';
             languages: [Locale.en, Locale.de],
         }),
         FirebaseModule,
+        ZohoModule,
+        TempModule,
     ],
     providers: [
         {
