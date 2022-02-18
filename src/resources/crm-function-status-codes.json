@@ -1,0 +1,114 @@
+[
+    {
+        "statusCode": 200,
+        "code": "OK"
+    },
+    {
+        "statusCode": 201,
+        "code": "Created"
+    },
+    {
+        "statusCode": 202,
+        "code": "Accepted"
+    },
+    {
+        "statusCode": 204,
+        "code": "No Content"
+    },
+    {
+        "statusCode": 304,
+        "code": "Not Modified"
+    },
+    {
+        "statusCode": 400,
+        "code": "BAD REQUEST"
+    },
+    {
+        "statusCode": 400,
+        "code": "INVALID_DATA"
+    },
+    {
+        "statusCode": 400,
+        "code": "INVALID_MODULE"
+    },
+    {
+        "statusCode": 400,
+        "code": "DUPLICATE_DATA"
+    },
+    {
+        "statusCode": 400,
+        "code": "MANDATORY_NOT_FOUND"
+    },
+    {
+        "statusCode": 400,
+        "code": "PATTERN_NOT_MATCHED"
+    },
+    {
+        "statusCode": 400,
+        "code": "INVALID_REQUEST_METHOD"
+    },
+    {
+        "statusCode": 400,
+        "code": "REQUIRED_PARAM_MISSING"
+    },
+    {
+        "statusCode": 400,
+        "code": "LICENSE_LIMIT_EXCEEDED"
+    },
+    {
+        "statusCode": 401,
+        "code": "AUTHORIZATION ERROR"
+    },
+    {
+        "statusCode": 401,
+        "code": "AUTHENTICATION_FAILED"
+    },
+    {
+        "statusCode": 401,
+        "code": "OAUTH_SCOPE_MISMATCH"
+    },
+    {
+        "statusCode": 401,
+        "code": "INVALID_TOKEN"
+    },
+    {
+        "statusCode": 403,
+        "code": "FORBIDDEN"
+    },
+    {
+        "statusCode": 403,
+        "code": "NO_PERMISSION"
+    },
+    {
+        "statusCode": 403,
+        "code": "FEATURE_NOT_SUPPORTED"
+    },
+    {
+        "statusCode": 404,
+        "code": "NOT FOUND"
+    },
+    {
+        "statusCode": 404,
+        "code": "NOT_FOUND"
+    },
+    {
+        "statusCode": 404,
+        "code": "INVALID_URL_PATTERN"
+    },
+    {
+        "statusCode": 405,
+        "code": "METHOD NOT ALLOWED"
+    },
+    {
+        "statusCode": 415,
+        "code": "UNSUPPORTED MEDIA TYPE"
+    },
+    {
+        "statusCode": 429,
+        "code": "TOO MANY REQUESTS"
+    },
+    {
+        "statusCode": 500,
+        "code": "INTERNAL SERVER ERROR"
+    }
+]
