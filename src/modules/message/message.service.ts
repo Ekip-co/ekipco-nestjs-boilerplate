@@ -1,7 +1,7 @@
 import { Locale } from '@constants';
 import { Injectable } from '@nestjs/common';
 import { MessageOptions } from '@modules/message/interfaces/message-options.interface';
-import * as fs from 'fs';
+import { readFileSync } from 'fs';
 
 @Injectable()
 export class MessageService {
@@ -10,7 +10,7 @@ export class MessageService {
     constructor(private options: MessageOptions) {
         options.languages.forEach((language: string) => {
             const locationPath = options.path + language + '.json';
-            const buffer = fs.readFileSync(locationPath, { encoding: 'utf8' });
+            const buffer = readFileSync(locationPath, { encoding: 'utf8' });
             this.languages[language] = JSON.parse(buffer);
         });
     }
@@ -20,10 +20,16 @@ export class MessageService {
             ? locale
             : this.options.defaultLanguage;
 
-        if (Object.keys(this.languages[language]).includes(key)) {
+        if (this.isExistsKey(key, language)) {
             return this.languages[language][key];
-        } else {
+        } else if (this.isExistsKey(key, this.options.defaultLanguage)) {
             return this.languages[this.options.defaultLanguage][key];
+        } else {
+            return key;
         }
+    }
+
+    private isExistsKey(key: string, locale: Locale) {
+        return Object.keys(this.languages[locale]).includes(key);
     }
 }
