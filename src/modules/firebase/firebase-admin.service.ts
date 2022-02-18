@@ -43,15 +43,27 @@ export class FirebaseAdminService {
         );
     }
 
-    getAuth() {
+    getAuth(): Auth {
         return this.auth;
     }
 
-    getFirestore() {
+    getFirestore(): Firestore {
         return this.firestore;
     }
 
-    getDatabase() {
+    getDatabase(): Database {
         return this.database;
+    }
+
+    getZohoTokenCollectionPath(): string {
+        return this.firebaseCfg.zohoTokenCollectionPath;
+    }
+
+    getZohoTokenDocumentPath(): string {
+        return this.firebaseCfg.zohoTokenDocumentPath;
+    }
+
+    getZohoTokenFieldName(): string {
+        return this.firebaseCfg.zohoTokenFieldName;
     }
 }
