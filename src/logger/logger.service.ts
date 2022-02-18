@@ -12,7 +12,7 @@ import * as moment from 'moment';
 import { convertToLines } from '@utils/utils';
 import ZohoCliqTransport from './transports/zoho-cliq.transport';
 import { ConfigType } from '@nestjs/config';
-import generalConfig from '../config/general.config';
+import generalConfig from '@config/general.config';
 import { isDefined } from 'class-validator';
 
 @Injectable({ scope: Scope.TRANSIENT })
@@ -143,22 +143,18 @@ export class LoggerService extends ConsoleLogger {
         // @ts-ignore
         return this._logger.debug(...info);
     }
-
     error(...info: any[]) {
         // @ts-ignore
         return this._logger.error(...info);
     }
-
     warn(...info: any[]) {
         // @ts-ignore
         return this._logger.warn(...info);
     }
-
     debug(...info: any[]) {
         // @ts-ignore
         return this._logger.debug(...info);
     }
-
     info(...info: any[]) {
         // @ts-ignore
         return this._logger.info(...info);
