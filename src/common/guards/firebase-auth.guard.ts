@@ -1,6 +1,7 @@
 // noinspection JSMethodCanBeStatic
 
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 import { InjectLogger, LoggerService } from '@logger';
 import { Request } from 'express';
 import { FirebaseAdminService } from '@modules/firebase/firebase-admin.service';
@@ -14,6 +15,7 @@ export class FirebaseAuthGuard implements CanActivate {
     constructor(
         @InjectLogger(FirebaseAuthGuard.name) private logger: LoggerService,
         private fbAdmin: FirebaseAdminService,
+        private reflector: Reflector,
     ) {}
 
     canActivate(context: ExecutionContext): Promise<boolean> | boolean {
@@ -25,7 +27,12 @@ export class FirebaseAuthGuard implements CanActivate {
         const ctx = context.switchToHttp();
         const req = ctx.getRequest<Request>();
 
-        return this.validateRequest(req);
+        const allowUnauthorizedRequest = this.reflector.get<boolean>(
+            'allowUnauthorizedRequest',
+            context.getHandler(),
+        );
+
+        return allowUnauthorizedRequest || this.validateRequest(req);
     }
 
     private validateRequest(req: Request): Promise<boolean> | boolean {
