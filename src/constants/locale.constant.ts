@@ -1,3 +1,4 @@
+// noinspection JSUnusedGlobalSymbols
 export enum Locale {
     af = 'af',
     af_NA = 'af-NA',
