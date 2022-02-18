@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { LoggerService } from '@logger';
 import { EkipException } from '@exceptions';
-import { InjectMessage } from '@modules/message/message.decarator';
+import { InjectMessage } from '@modules/message/message.decorator';
 import { MessageService } from '@modules/message/message.service';
 
 @Catch()
