@@ -4,3 +4,5 @@ export * from './forbidden.exception';
 export * from './not-found.exception';
 export * from './bad-request.exception';
 export * from './no-response-received-zoho.exception';
+export * from './firebase.exception';
+export * from './already-exists.exception';
