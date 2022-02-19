@@ -10,7 +10,7 @@ import {
     NoResponseReceivedZohoException,
     NotFoundException,
 } from '@exceptions';
-import { CrmStatusCode } from '@modules/zoho/crm-status-code.interface';
+import { CrmStatusCode } from '@modules/zoho/core/crm-status-code.interface';
 import { readFileSync } from 'fs';
 
 @Injectable()
