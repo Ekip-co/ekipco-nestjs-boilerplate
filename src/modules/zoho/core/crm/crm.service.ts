@@ -29,7 +29,7 @@ export class ZohoCrmService {
         private tokenService: OAuthTokenService,
     ) {
         const statusCodesPath =
-            __dirname + '/../../../resources/crm-function-status-codes.json';
+            __dirname + '/../../../../resources/crm-function-status-codes.json';
         const statusCodesBuffers = readFileSync(statusCodesPath, {
             encoding: 'utf8',
         });

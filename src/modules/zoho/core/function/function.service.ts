@@ -22,7 +22,7 @@ export class ZohoFunctionService {
         private httpService: HttpService,
     ) {
         const statusCodesPath =
-            __dirname + '/../../../resources/crm-function-status-codes.json';
+            __dirname + '/../../../../resources/crm-function-status-codes.json';
         const statusCodesBuffers = readFileSync(statusCodesPath, {
             encoding: 'utf8',
         });
