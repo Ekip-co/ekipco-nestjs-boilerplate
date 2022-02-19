@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { FirebaseAdminService } from '@modules/firebase/firebase-admin.service';
+import { FirebaseException } from '@exceptions';
 
 @Injectable()
 export class OAuthTokenService {
@@ -17,7 +18,7 @@ export class OAuthTokenService {
             .get()
             .then((result) => result.data()[fieldName])
             .catch((err) => {
-                throw err;
+                throw new FirebaseException(err);
             });
     }
 
