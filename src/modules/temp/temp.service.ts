@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { ZohoFunctionService } from '@modules/zoho/function/function.service';
-import { ZohoCrmService } from '@modules/zoho/crm/crm.service';
+import { ZohoFunctionService } from '@modules/zoho/core/function/function.service';
+import { ZohoCrmService } from '@modules/zoho/core/crm/crm.service';
 
 @Injectable()
 export class TempService {

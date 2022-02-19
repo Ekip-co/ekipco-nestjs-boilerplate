@@ -3,7 +3,7 @@ import zohoConfig from '@config/zoho.config';
 import { ConfigType } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import { readFileSync } from 'fs';
-import { CrmStatusCode } from '@modules/zoho/crm-status-code.interface';
+import { CrmStatusCode } from '@modules/zoho/core/crm-status-code.interface';
 import { lastValueFrom, Observable } from 'rxjs';
 import { AxiosResponse } from 'axios';
 import { EkipException, NoResponseReceivedZohoException } from '@exceptions';
