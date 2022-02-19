@@ -12,3 +12,8 @@ export enum UnauthorizedExceptionType {
 export enum BadRequestExceptionType {
     BAD_REQUEST = 'BAD_REQUEST',
 }
+
+export enum AlreadyExistsExceptionType {
+    ALREADY_EXISTS = 'ALREADY_EXISTS',
+    USER_ALREADY_EXISTS = 'USER_ALREADY_EXISTS',
+}
