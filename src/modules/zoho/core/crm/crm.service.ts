@@ -10,12 +10,12 @@ import {
     NotFoundException,
     NoResponseReceivedZohoException,
 } from '@exceptions';
-import { CrmStatusCode } from '@modules/zoho/crm-status-code.interface';
+import { CrmStatusCode } from '@modules/zoho/core/crm-status-code.interface';
 import { readFileSync } from 'fs';
 import { isDefined } from 'class-validator';
 import { OAuthTokenService } from '@modules/firebase/oauth-token.service';
-import { ZohoCrmOptions } from '@modules/zoho/crm/interfaces/crm-options.interface';
-import { File } from '@modules/zoho/crm/interfaces/file.interface';
+import { ZohoCrmOptions } from '@modules/zoho/core/crm/interfaces/crm-options.interface';
+import { File } from '@modules/zoho/core/crm/interfaces/file.interface';
 
 type ZohoHttpMethod = 'POST' | 'PUT' | 'DELETE';
 
@@ -36,7 +36,7 @@ export class ZohoCrmService {
         this.statusCodes = JSON.parse(statusCodesBuffers);
     }
 
-    async create(moduleName: string, data: Record<string, unknown>[]) {
+    async create(moduleName: string, data: Record<string, any>[]) {
         return this.executeQuery('POST', moduleName, null, null, {
             data: data,
         });
@@ -45,7 +45,7 @@ export class ZohoCrmService {
     async update(
         moduleName: string,
         recordId: string,
-        data: Record<string, unknown>[],
+        data: Record<string, any>[],
     ) {
         const result = await this.executeQuery(
             'PUT',

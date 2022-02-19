@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { ZohoCrmService } from '@modules/zoho/crm/crm.service';
+import { ZohoCrmService } from '@modules/zoho/core/crm/crm.service';
 import { FirebaseModule } from '@modules/firebase/firebase.module';
 
 @Module({
