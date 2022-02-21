@@ -2,10 +2,10 @@ import {
     ArgumentsHost,
     Catch,
     ExceptionFilter,
+    HttpException,
     HttpStatus,
 } from '@nestjs/common';
 import { LoggerService } from '@logger';
-import { EkipException } from '@exceptions';
 import { InjectMessage } from '@modules/message/message.decorator';
 import { MessageService } from '@modules/message/message.service';
 
@@ -22,12 +22,12 @@ export class AllExceptionsFilter implements ExceptionFilter {
         const res = ctx.getResponse();
 
         const httpStatus =
-            exception instanceof EkipException
+            exception instanceof HttpException
                 ? exception.getStatus()
                 : HttpStatus.INTERNAL_SERVER_ERROR;
 
         const message =
-            exception instanceof EkipException
+            exception instanceof HttpException
                 ? this.messageService.getMessage(
                       exception.message,
                       req.language,
