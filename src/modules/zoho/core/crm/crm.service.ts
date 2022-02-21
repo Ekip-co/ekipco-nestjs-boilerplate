@@ -5,41 +5,30 @@ import zohoConfig from '@config/zoho.config';
 import { ConfigType } from '@nestjs/config';
 import { lastValueFrom } from 'rxjs';
 import { AxiosResponse } from 'axios';
-import {
-    EkipException,
-    NotFoundException,
-    NoResponseReceivedZohoException,
-} from '@exceptions';
-import { CrmStatusCode } from '@modules/zoho/core/crm-status-code.interface';
-import { readFileSync } from 'fs';
+import { NotFoundException } from '@exceptions';
 import { isDefined } from 'class-validator';
 import { OAuthTokenService } from '@modules/firebase/oauth-token.service';
 import { ZohoCrmOptions } from '@modules/zoho/core/crm/interfaces/crm-options.interface';
 import { File } from '@modules/zoho/core/crm/interfaces/file.interface';
+import { RecordApiResponse } from '@modules/zoho/core/crm/entities/record-api-response.entity';
+import { ZohoCoreService } from '../core.service';
 
 type ZohoHttpMethod = 'POST' | 'PUT' | 'DELETE';
 
 @Injectable()
-export class ZohoCrmService {
-    private readonly statusCodes: CrmStatusCode[];
-
+export class ZohoCrmService extends ZohoCoreService {
     constructor(
         @Inject(zohoConfig.KEY) private zohoCfg: ConfigType<typeof zohoConfig>,
         private httpService: HttpService,
         private tokenService: OAuthTokenService,
     ) {
-        const statusCodesPath =
-            __dirname + '/../../../../resources/crm-function-status-codes.json';
-        const statusCodesBuffers = readFileSync(statusCodesPath, {
-            encoding: 'utf8',
-        });
-        this.statusCodes = JSON.parse(statusCodesBuffers);
+        super();
     }
 
     async create(moduleName: string, data: Record<string, any>[]) {
-        return this.executeQuery('POST', moduleName, null, null, {
+        return (await this.executeAPI('POST', moduleName, null, null, {
             data: data,
-        });
+        })) as RecordApiResponse[];
     }
 
     async update(
@@ -47,7 +36,7 @@ export class ZohoCrmService {
         recordId: string,
         data: Record<string, any>[],
     ) {
-        const result = await this.executeQuery(
+        const result: RecordApiResponse[] = await this.executeAPI(
             'PUT',
             moduleName,
             recordId,
@@ -61,21 +50,30 @@ export class ZohoCrmService {
     }
 
     async deleteOne(moduleName: string, recordId: string) {
-        const result = await this.executeQuery('DELETE', moduleName, recordId);
+        const result: RecordApiResponse[] = await this.executeAPI(
+            'DELETE',
+            moduleName,
+            recordId,
+        );
         return result[0];
     }
 
     async deleteMany(moduleName: string, recordIds: string[]) {
-        return this.executeQuery('DELETE', moduleName, null, recordIds);
+        return (await this.executeAPI(
+            'DELETE',
+            moduleName,
+            null,
+            recordIds,
+        )) as RecordApiResponse[];
     }
 
     async selectQuery(query: string) {
-        return this.executeQuery('POST', 'coql', null, null, {
+        return this.executeAPI('POST', 'coql', null, null, {
             select_query: query,
         });
     }
 
-    private async executeQuery(
+    private async executeAPI(
         method: ZohoHttpMethod,
         moduleName: string,
         recordId?: string,
@@ -93,8 +91,10 @@ export class ZohoCrmService {
         );
 
         return lastValueFrom(observable)
-            .then((result: AxiosResponse<any>) => this.resultHandling(result))
-            .catch((err) => this.errorHandling(err));
+            .then((response: AxiosResponse<any>) =>
+                this.responseHandler(response, moduleName, method),
+            )
+            .catch((err) => this.errorHandler(err));
     }
 
     private async executeAxiosInstance(
@@ -133,12 +133,12 @@ export class ZohoCrmService {
             options['headers']['Authorization'] = `Zoho-oauthtoken ${token}`;
         }
 
-        this.bodyHandling(extraOpts, body, options);
+        this.bodyHandler(extraOpts, body, options);
 
         return this.httpService.request(options);
     }
 
-    private bodyHandling(extraOpts: ZohoCrmOptions, body: any, options: any) {
+    private bodyHandler(extraOpts: ZohoCrmOptions, body: any, options: any) {
         if (extraOpts.fileUpload && extraOpts.fileUpload.length > 0) {
             const formDataObject: any = {
                 ...body,
@@ -169,14 +169,18 @@ export class ZohoCrmService {
         }
     }
 
-    private resultHandling(result: AxiosResponse<any>) {
+    private responseHandler(
+        response: AxiosResponse<any>,
+        moduleName: string,
+        method: string,
+    ) {
         // Zoho undefined dönderiyor aranan coql bulamayınca. Undefined sıkıntılarını çözmek için.
-        if (!result) {
+        if (!response) {
             return { data: [] };
         }
 
-        const info = result.data.info;
-        let parsedResults = result.data.data;
+        const info = response.data.info;
+        let parsedResults = response.data.data;
 
         if (!parsedResults) throw new NotFoundException();
 
@@ -187,48 +191,12 @@ export class ZohoCrmService {
                 message: any;
                 details: any;
             }) => {
-                if (
-                    parsedResult.code !== 'success' &&
-                    parsedResult.status === 'error'
-                ) {
-                    const crmStatusCode = this.statusCodes.find(
-                        (e: CrmStatusCode) => e.code === parsedResult.code,
-                    );
-                    const statusCode = crmStatusCode
-                        ? crmStatusCode.statusCode
-                        : 500;
-                    const message = `${
-                        parsedResult.message
-                    }, details: ${JSON.stringify(parsedResult.details)}`;
-                    throw new EkipException(message, statusCode);
-                }
+                this.resultExceptionCheck(parsedResult, moduleName, method);
 
                 return parsedResult.details || parsedResult;
             },
         );
 
         return info ? { data: parsedResults, info: info } : parsedResults;
-    }
-
-    private errorHandling(err: any) {
-        if (err.response && !(err instanceof EkipException)) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            const crmStatusCode = this.statusCodes.find(
-                (e: CrmStatusCode) => e.code === err.response.data.code,
-            );
-            const statusCode = crmStatusCode ? crmStatusCode.statusCode : 500;
-
-            throw new EkipException(
-                err.response.data.message,
-                statusCode || err.response.status,
-            );
-        } else if (err.request) {
-            // The request was made but no response was received from Zoho
-            throw new NoResponseReceivedZohoException(err);
-        } else {
-            // Something happened in setting up the request that triggered an Error
-            throw err;
-        }
     }
 }
