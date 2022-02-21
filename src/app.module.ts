@@ -12,7 +12,7 @@ import { FirebaseModule } from '@modules/firebase/firebase.module';
 import { FirebaseAuthGuard } from '@guards/firebase-auth.guard';
 import { Locale } from '@constants';
 import { AllExceptionsFilter } from '@filters';
-import { TempModule } from '@modules/temp/temp.module';
+import { SampleModule } from '@modules/sample/sample.module';
 import { ZohoModule } from '@modules/zoho/zoho.module';
 
 @Module({
@@ -30,7 +30,7 @@ import { ZohoModule } from '@modules/zoho/zoho.module';
         }),
         FirebaseModule,
         ZohoModule,
-        TempModule,
+        SampleModule,
     ],
     providers: [
         {

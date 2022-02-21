@@ -1,10 +1,10 @@
-import { TempService } from '@modules/temp/temp.service';
+import { SampleService } from '@modules/sample/sample.service';
 import { Controller, Delete, Get, Put } from '@nestjs/common';
 import { AllowUnauthorizedRequest } from '@/common/decorators';
 
-@Controller('temp')
-export class TempController {
-    constructor(private readonly tempService: TempService) {}
+@Controller('sample')
+export class SampleController {
+    constructor(private readonly tempService: SampleService) {}
 
     @Get('zoho/function')
     @AllowUnauthorizedRequest()

@@ -3,7 +3,7 @@ import { ZohoFunctionService } from '@modules/zoho/core/function/function.servic
 import { ZohoCrmService } from '@modules/zoho/core/crm/crm.service';
 
 @Injectable()
-export class TempService {
+export class SampleService {
     constructor(
         private zohoFunctionService: ZohoFunctionService,
         private zohoCrmService: ZohoCrmService,
