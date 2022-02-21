@@ -6,3 +6,4 @@ export * from './bad-request.exception';
 export * from './no-response-received-zoho.exception';
 export * from './firebase.exception';
 export * from './already-exists.exception';
+export * from './zoho.exception';
