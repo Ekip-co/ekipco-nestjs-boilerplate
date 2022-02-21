@@ -5,35 +5,31 @@ import zohoConfig from '@config/zoho.config';
 import { ConfigType } from '@nestjs/config';
 import { lastValueFrom, Observable } from 'rxjs';
 import { AxiosResponse } from 'axios';
-import {
-    EkipException,
-    NoResponseReceivedZohoException,
-    NotFoundException,
-} from '@exceptions';
-import { CrmStatusCode } from '@modules/zoho/core/crm-status-code.interface';
-import { readFileSync } from 'fs';
+import { NotFoundException } from '@exceptions';
+import { ZohoCoreService } from '../core.service';
 
 @Injectable()
-export class ZohoFunctionService {
-    private readonly statusCodes: CrmStatusCode[];
+export class ZohoFunctionService extends ZohoCoreService {
+    private readonly FUNCTION_METHOD: string = 'FUNCTION'; // for Zoho Exception
 
     constructor(
         @Inject(zohoConfig.KEY) private zohoCfg: ConfigType<typeof zohoConfig>,
         private httpService: HttpService,
     ) {
-        const statusCodesPath =
-            __dirname + '/../../../../resources/crm-function-status-codes.json';
-        const statusCodesBuffers = readFileSync(statusCodesPath, {
-            encoding: 'utf8',
-        });
-        this.statusCodes = JSON.parse(statusCodesBuffers);
+        super();
     }
 
     executeFunction(functionName: string, data?: any) {
         const observable = this.executeAxiosInstance(functionName, data);
         return lastValueFrom(observable)
-            .then((result: AxiosResponse<any>) => this.resultHandling(result))
-            .catch((err) => this.errorHandling(err));
+            .then((response: AxiosResponse<any>) =>
+                this.responseHandler(
+                    response,
+                    functionName,
+                    this.FUNCTION_METHOD,
+                ),
+            )
+            .catch((err) => this.errorHandler(err));
     }
 
     private executeAxiosInstance(
@@ -66,12 +62,16 @@ export class ZohoFunctionService {
         return this.httpService.post(url, bodyFormData, options);
     }
 
-    private resultHandling(result: AxiosResponse<any>) {
+    private responseHandler(
+        response: AxiosResponse<any>,
+        moduleName: string,
+        method: string,
+    ) {
         // Axios dan gelen bilgi "data" içerisinde, Zohodan gelen bilgi "details.output.data" içerisinde.
         // Output string olarak geliyor JSON'a çevirilmesi lazım.
         // JSON'a çevirdikten sonra data 'data' key'inin içerisinde.
 
-        const stringResult = result.data.details.output as string;
+        const stringResult = response.data.details.output as string;
 
         const parsedResult = stringResult
             ? JSON.parse(stringResult).data
@@ -79,44 +79,8 @@ export class ZohoFunctionService {
 
         if (!parsedResult) throw new NotFoundException();
 
-        // Herhangi bir hata çıkarsa diye kontrol et.
-        if (
-            parsedResult.code !== 'success' &&
-            parsedResult.status === 'error'
-        ) {
-            const crmStatusCode = this.statusCodes.find(
-                (e: CrmStatusCode) => e.code === parsedResult.code,
-            );
-            const statusCode = crmStatusCode ? crmStatusCode.statusCode : 500;
-            const message = `${parsedResult.message}, details: ${JSON.stringify(
-                parsedResult.details,
-            )}`;
-
-            throw new EkipException(message, statusCode);
-        }
+        this.resultExceptionCheck(parsedResult, moduleName, method);
 
         return parsedResult;
-    }
-
-    private errorHandling(err: any) {
-        if (err.response && !(err instanceof EkipException)) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            const crmStatusCode = this.statusCodes.find(
-                (e: CrmStatusCode) => e.code === err.response.data.code,
-            );
-            const statusCode = crmStatusCode ? crmStatusCode.statusCode : 500;
-
-            throw new EkipException(
-                err.response.data.message,
-                statusCode || err.response.status,
-            );
-        } else if (err.request) {
-            // The request was made but no response was received from Zoho
-            throw new NoResponseReceivedZohoException(err);
-        } else {
-            // Something happened in setting up the request that triggered an Error
-            throw err;
-        }
     }
 }
