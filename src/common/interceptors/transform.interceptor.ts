@@ -19,6 +19,6 @@ export class TransformInterceptor<T>
         context: ExecutionContext,
         next: CallHandler,
     ): Observable<Response<T>> {
-        return next.handle().pipe(map((data) => ({ ...data, error: false })));
+        return next.handle().pipe(map((data) => ({ data, error: false })));
     }
 }
