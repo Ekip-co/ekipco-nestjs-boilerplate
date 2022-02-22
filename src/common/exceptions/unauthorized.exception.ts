@@ -1,6 +1,6 @@
 import { EkipException } from '@exceptions';
 import { HttpStatus } from '@nestjs/common';
-import { UnauthorizedExceptionType } from '@constants';
+import { UnauthorizedExceptionType } from '@enums';
 
 export class UnauthorizedException extends EkipException {
     constructor(

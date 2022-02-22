@@ -8,7 +8,7 @@ import { FirebaseAdminService } from '@modules/firebase/firebase-admin.service';
 import { IncomingHttpHeaders } from 'http';
 import { isDefined } from 'class-validator';
 import { ForbiddenException, UnauthorizedException } from '@exceptions';
-import { ForbiddenExceptionType, UnauthorizedExceptionType } from '@constants';
+import { ForbiddenExceptionType, UnauthorizedExceptionType } from '@enums';
 
 @Injectable()
 export class FirebaseAuthGuard implements CanActivate {

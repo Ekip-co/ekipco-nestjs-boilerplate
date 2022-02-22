@@ -1,6 +1,6 @@
 import { EkipException } from '@exceptions';
 import { HttpStatus } from '@nestjs/common';
-import { AlreadyExistsExceptionType } from '@constants';
+import { AlreadyExistsExceptionType } from '@enums';
 
 export class AlreadyExistsException extends EkipException {
     constructor(

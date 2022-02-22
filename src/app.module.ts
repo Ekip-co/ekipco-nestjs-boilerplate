@@ -10,7 +10,7 @@ import zohoConfig from '@config/zoho.config';
 import { MessageModule } from '@modules/message/message.module';
 import { FirebaseModule } from '@modules/firebase/firebase.module';
 import { FirebaseAuthGuard } from '@guards/firebase-auth.guard';
-import { Locale } from '@constants';
+import { Locale } from '@enums';
 import { AllExceptionsFilter } from '@filters';
 import { SampleModule } from '@modules/sample/sample.module';
 import { ZohoModule } from '@modules/zoho/zoho.module';

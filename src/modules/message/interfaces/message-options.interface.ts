@@ -1,4 +1,4 @@
-import { Locale } from '@constants';
+import { Locale } from '@enums';
 
 export interface MessageOptions {
     path: string;

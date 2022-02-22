@@ -1,4 +1,4 @@
-import { Locale } from '@constants';
+import { Locale } from '@enums';
 import { Injectable } from '@nestjs/common';
 import { MessageOptions } from '@modules/message/interfaces/message-options.interface';
 import { readFileSync } from 'fs';

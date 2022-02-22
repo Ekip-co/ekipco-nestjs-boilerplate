@@ -1,6 +1,6 @@
 import { EkipException } from '@exceptions';
 import { HttpStatus } from '@nestjs/common';
-import { BadRequestExceptionType } from '@constants';
+import { BadRequestExceptionType } from '@enums';
 
 export class BadRequestException extends EkipException {
     constructor(
