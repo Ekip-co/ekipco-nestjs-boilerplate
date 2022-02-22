@@ -29,6 +29,7 @@
       "@pipes": ["common/pipes"],
       "@config/*": ["config/*"],
       "@constants": ["constants"],
+      "@enums": ["enums"],
       "@utils/*": ["utils/*"],
       "@logger": ["logger"],
       "@modules/*": ["modules/*"],
