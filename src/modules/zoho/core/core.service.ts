@@ -1,6 +1,6 @@
 import {
     EkipException,
-    NoResponseReceivedZohoException,
+    NoResponseReceivedException,
     ZohoException,
 } from '@exceptions';
 import { readFileSync } from 'fs';
@@ -66,7 +66,7 @@ export class ZohoCoreService {
             );
         } else if (err.request) {
             // The request was made but no response was received from Zoho
-            throw new NoResponseReceivedZohoException(err);
+            throw new NoResponseReceivedException(err);
         } else {
             // Something happened in setting up the request that triggered an Error
             throw err;

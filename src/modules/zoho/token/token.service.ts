@@ -6,7 +6,7 @@ import { readFileSync } from 'fs';
 import { CrmStatusCode } from '@modules/zoho/core/crm-status-code.interface';
 import { lastValueFrom, Observable } from 'rxjs';
 import { AxiosResponse } from 'axios';
-import { EkipException, NoResponseReceivedZohoException } from '@exceptions';
+import { EkipException, NoResponseReceivedException } from '@exceptions';
 
 @Injectable()
 export class ZohoTokenService {
@@ -62,7 +62,7 @@ export class ZohoTokenService {
             );
         } else if (err.request) {
             // The request was made but no response was received from Zoho
-            throw new NoResponseReceivedZohoException(err);
+            throw new NoResponseReceivedException(err);
         } else {
             // Something happened in setting up the request that triggered an Error
             throw err;
