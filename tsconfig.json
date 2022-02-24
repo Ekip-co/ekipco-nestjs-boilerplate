@@ -26,7 +26,6 @@
       "@decorators": ["common/decorators"],
       "@interceptors": ["common/interceptors"],
       "@middleware": ["common/middleware"],
-      "@pipes": ["common/pipes"],
       "@config/*": ["config/*"],
       "@constants": ["constants"],
       "@enums": ["enums"],
