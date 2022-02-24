@@ -1,7 +1,10 @@
-import { EkipException } from '@exceptions';
 import { FirebaseError } from 'firebase-admin';
+import { HttpException } from '@nestjs/common';
 
-export class FirebaseException extends EkipException {
+export class FirebaseException extends HttpException {
+    private readonly service: string;
+    private readonly error?: FirebaseError;
+
     constructor(error: FirebaseError) {
         let statusCode = 500;
 
@@ -30,6 +33,9 @@ export class FirebaseException extends EkipException {
             statusCode = 502;
         }
 
-        super(error.message, statusCode);
+        super({ error: true, message: error.message }, statusCode);
+
+        this.service = error.code.split('/')[0];
+        this.error = error;
     }
 }
