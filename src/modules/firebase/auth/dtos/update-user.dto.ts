@@ -4,56 +4,27 @@ import {
     IsPhoneNumber,
     IsString,
     IsUrl,
-    ValidationArguments,
 } from 'class-validator';
 
 export class UpdateUserDto {
-    @IsBoolean({
-        message: (args: ValidationArguments) => {
-            return `${args.property} is invalid.`;
-        },
-    })
+    @IsBoolean()
     emailVerified?: boolean;
 
-    @IsEmail({
-        message: (args: ValidationArguments) => {
-            return `${args.property} is invalid.`;
-        },
-    })
+    @IsEmail()
     email?: string;
 
-    @IsPhoneNumber(undefined, {
-        message: (args: ValidationArguments) => {
-            return `${args.property} is invalid.`;
-        },
-    })
+    @IsPhoneNumber()
     phoneNumber?: string;
 
-    @IsString({
-        message: (args: ValidationArguments) => {
-            return `${args.property} is invalid.`;
-        },
-    })
+    @IsString()
     password?: string;
 
-    @IsString({
-        message: (args: ValidationArguments) => {
-            return `${args.property} is invalid.`;
-        },
-    })
+    @IsString()
     displayName?: string;
 
-    @IsUrl({
-        message: (args: ValidationArguments) => {
-            return `${args.property} is invalid.`;
-        },
-    })
+    @IsUrl()
     photoURL?: string;
 
-    @IsBoolean({
-        message: (args: ValidationArguments) => {
-            return `${args.property} is invalid.`;
-        },
-    })
+    @IsBoolean()
     disabled?: boolean;
 }
