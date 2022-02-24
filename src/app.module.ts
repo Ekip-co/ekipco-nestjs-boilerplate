@@ -1,8 +1,12 @@
-import { Module } from '@nestjs/common';
+import {
+    BadRequestException,
+    HttpStatus,
+    Module,
+    ValidationPipe,
+} from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER, APP_GUARD, APP_PIPE } from '@nestjs/core';
 import { LoggerModule } from '@logger';
-import { ValidationPipe } from '@pipes';
 import generalConfig from '@config/general.config';
 import gcloudConfig from '@config/gcloud.config';
 import firebaseConfig from '@config/firebase.config';
@@ -14,6 +18,7 @@ import { Locale } from '@enums';
 import { AllExceptionsFilter } from '@filters';
 import { SampleModule } from '@modules/sample/sample.module';
 import { ZohoModule } from '@modules/zoho/zoho.module';
+import { ValidationError } from 'class-validator';
 
 @Module({
     imports: [
@@ -39,7 +44,15 @@ import { ZohoModule } from '@modules/zoho/zoho.module';
         },
         {
             provide: APP_PIPE,
-            useClass: ValidationPipe,
+            useFactory: () => {
+                return new ValidationPipe({
+                    whitelist: true,
+                    errorHttpStatusCode: HttpStatus.BAD_REQUEST,
+                    transform: true,
+                    exceptionFactory: (errors: ValidationError[]) =>
+                        new BadRequestException(errors),
+                });
+            },
         },
         {
             provide: APP_FILTER,
