@@ -19,6 +19,7 @@ import {
     languageMiddleware,
 } from '@middleware';
 import { mw } from 'request-ip';
+import { ValidationErrorFilter } from '@filters';
 
 async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -70,6 +71,8 @@ async function bootstrap() {
     app.use(languageMiddleware);
 
     app.useGlobalInterceptors(new TransformInterceptor());
+
+    app.useGlobalFilters(new ValidationErrorFilter());
 
     await app.listen(3000);
 }
