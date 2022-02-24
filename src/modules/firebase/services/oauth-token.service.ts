@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { FirebaseAdminService } from '@modules/firebase/firebase-admin.service';
-import { FirebaseException } from '@exceptions';
+import { FirebaseAdminService } from '@modules/firebase/services/firebase-admin.service';
+import { FirebaseException } from '@modules/firebase/firebase.exception';
 
 @Injectable()
 export class OAuthTokenService {

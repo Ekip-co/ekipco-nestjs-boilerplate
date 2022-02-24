@@ -1,7 +1,7 @@
 import { All, Controller } from '@nestjs/common';
 import { AllowUnauthorizedRequest } from '@/common/decorators';
 import { ZohoTokenService } from '@modules/zoho/token/token.service';
-import { OAuthTokenService } from '@modules/firebase/oauth-token.service';
+import { OAuthTokenService } from '@modules/firebase/services/oauth-token.service';
 
 @Controller('')
 export class ZohoTokenController {

@@ -7,7 +7,7 @@ import { lastValueFrom } from 'rxjs';
 import { AxiosResponse } from 'axios';
 import { NotFoundException } from '@exceptions';
 import { isDefined } from 'class-validator';
-import { OAuthTokenService } from '@modules/firebase/oauth-token.service';
+import { OAuthTokenService } from '@modules/firebase/services/oauth-token.service';
 import { ZohoCrmOptions } from '@modules/zoho/core/crm/interfaces/crm-options.interface';
 import { File } from '@modules/zoho/core/crm/interfaces/file.interface';
 import { RecordApiResponse } from '@modules/zoho/core/crm/entities/record-api-response.entity';

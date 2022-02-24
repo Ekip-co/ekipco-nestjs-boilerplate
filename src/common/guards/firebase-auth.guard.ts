@@ -4,7 +4,7 @@ import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { InjectLogger, LoggerService } from '@logger';
 import { Request } from 'express';
-import { FirebaseAdminService } from '@modules/firebase/firebase-admin.service';
+import { FirebaseAdminService } from '@modules/firebase/services/firebase-admin.service';
 import { IncomingHttpHeaders } from 'http';
 import { isDefined } from 'class-validator';
 import { ForbiddenException, UnauthorizedException } from '@exceptions';
