@@ -29,7 +29,9 @@ export class ZohoFunctionService extends ZohoCoreService {
                     this.FUNCTION_METHOD,
                 ),
             )
-            .catch((err) => this.errorHandler(err));
+            .catch((err) =>
+                this.errorHandler(err, functionName, this.FUNCTION_METHOD),
+            );
     }
 
     private executeAxiosInstance(
