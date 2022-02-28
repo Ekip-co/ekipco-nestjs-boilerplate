@@ -1,7 +1,9 @@
 // for multipart/form-data file upload
 export interface File {
-    fieldName: string;
-    originalName: string;
-    mimeType: string;
+    fieldname: string;
+    originalname: string;
+    encoding: string;
+    mimetype: string;
     buffer: Buffer;
+    size: number;
 }
