@@ -47,7 +47,7 @@ export class ZohoCoreService {
         }
     }
 
-    protected errorHandler(err: any) {
+    protected errorHandler(err: any, moduleName: string, method: string) {
         if (
             err.response &&
             !(err instanceof EkipException) &&
@@ -60,9 +60,13 @@ export class ZohoCoreService {
             );
             const statusCode = crmStatusCode ? crmStatusCode.statusCode : 500;
 
-            throw new EkipException(
+            throw new ZohoException(
                 err.response.data.message,
                 statusCode || err.response.status,
+                err.response.data.details || '',
+                moduleName,
+                method,
+                err,
             );
         } else if (err.request) {
             // The request was made but no response was received from Zoho
