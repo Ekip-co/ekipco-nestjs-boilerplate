@@ -21,16 +21,13 @@ export class TransformInterceptor<T>
     ): Observable<Response<T>> {
         return next.handle().pipe(
             map((data) => {
-                if (data) {
-                    if (typeof data === 'object') {
-                        if (Object.keys(data).includes('data')) {
-                            Object.assign(data, { error: false });
-                        } else {
-                            return { data, error: false };
-                        }
+                if (data && typeof data === 'object') {
+                    if (Object.keys(data).includes('data')) {
+                        Object.assign(data, { error: false });
+                        return data;
                     }
                 }
-                return data;
+                return { data, error: false };
             }),
         );
     }
