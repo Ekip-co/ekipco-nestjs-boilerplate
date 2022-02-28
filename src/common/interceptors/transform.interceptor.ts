@@ -19,6 +19,19 @@ export class TransformInterceptor<T>
         context: ExecutionContext,
         next: CallHandler,
     ): Observable<Response<T>> {
-        return next.handle().pipe(map((data) => ({ data, error: false })));
+        return next.handle().pipe(
+            map((data) => {
+                if (data) {
+                    if (typeof data === 'object') {
+                        if (Object.keys(data).includes('data')) {
+                            Object.assign(data, { error: false });
+                        } else {
+                            return { data, error: false };
+                        }
+                    }
+                }
+                return data;
+            }),
+        );
     }
 }
