@@ -11,9 +11,12 @@ export enum UnauthorizedExceptionType {
 
 export enum BadRequestExceptionType {
     BAD_REQUEST = 'BAD_REQUEST',
+    MISSING_FILE_TYPE = 'MISSING_FILE_TYPE',
+    MISSING_FILE = 'MISSING_FILE',
 }
 
 export enum AlreadyExistsExceptionType {
     ALREADY_EXISTS = 'ALREADY_EXISTS',
     USER_ALREADY_EXISTS = 'USER_ALREADY_EXISTS',
+    USERNAME_ALREADY_EXISTS = 'USERNAME_ALREADY_EXISTS',
 }
