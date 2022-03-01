@@ -58,11 +58,13 @@ export class ZohoCoreService {
             const crmStatusCode = this.statusCodes.find(
                 (e: CrmStatusCode) => e.code === err.response.data.code,
             );
-            const statusCode = crmStatusCode ? crmStatusCode.statusCode : 500;
+            const statusCode = crmStatusCode
+                ? crmStatusCode.statusCode
+                : err.response.status;
 
             throw new ZohoException(
                 err.response.data.message,
-                statusCode || err.response.status,
+                statusCode || 500,
                 err.response.data.details || '',
                 moduleName,
                 method,
